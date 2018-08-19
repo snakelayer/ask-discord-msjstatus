@@ -20,13 +20,13 @@ def handle(request):
     games = get_games(presences)
     LOG.info('games: ' + str(games))
 
-    output_speech = build_speech_output(games)
+    raw_speech = build_raw_speech(games)
 
-    if len(output_speech) == 0:
-        output_speech = "No one is playing anything."
+    if len(raw_speech) == 0:
+        raw_speech = "No one is playing anything right now."
 
-    LOG.info('output_speech: ' + output_speech)
-    return speech.build_response({}, output_speech)
+    LOG.info('raw_speech: ' + raw_speech)
+    return speech.build_response({}, speech.build_plain_output_speech(raw_speech))
 
 def get_guild_presences():
     ws = websocket.create_connection(DISCORD_GATEWAY)
@@ -71,12 +71,12 @@ def get_games(presences):
 
     return games
 
-def build_speech_output(games):
-    speech_output = []
+def build_raw_speech(games):
+    raw_speech = []
     for game, userIds in sorted(games.items(), key=lambda entry: len(entry[1])):
-        speech_output.append(build_game_sentence(game, userIds))
+        raw_speech.append(build_game_sentence(game, userIds))
     
-    return ' '.join(speech_output)
+    return ' '.join(raw_speech)
 
 def build_game_sentence(game, userIds):
     if len(userIds) == 1:
