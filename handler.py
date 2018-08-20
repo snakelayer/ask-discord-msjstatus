@@ -20,4 +20,4 @@ def handle(event, context):
         LOG.info("IntentRequest")
         return intenthandler.handle(event['request'])
     elif event['request']['type'] == "SessionEndedRequest":
-        return speech.build_response({}, "Sorry, I misunderstood something.")
+        return speech.build_response({}, speech.build_plain_output_speech("Sorry, I misunderstood something."))
