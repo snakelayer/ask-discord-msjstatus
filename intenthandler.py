@@ -39,9 +39,11 @@ def handle(request):
             output_speech = speech.build_plain_output_speech("{}'s rating is {}".format(playerName, dotaRating))
             LOG.info("dota: userId=%s, rating=%d", userId, dotaRating)
 
-    if userId == "189977098935468042":
+    if random.randint(0, 9) <= 0:
         output_speech = use_meme_response(output_speech, playerName)
-    #print(output_speech)
+    elif userId == "189977098935468042" and random.randint(0, 2) <= 0:
+        output_speech = use_meme_response(output_speech, playerName)
+    LOG.info(output_speech)
     return speech.build_response({}, output_speech)
 
 def get_user_id(slots):
@@ -78,8 +80,6 @@ def call(url):
     return json.loads(response.read())
 
 def use_meme_response(output_speech, playerName):
-    if random.randint(0, 2) <= 0:
-        rating = random.randint(500, 1500)
-        return speech.build_output_speech("<speak>{}'s rating is {}. <break time=\"1s\"/> <phoneme alphabet=\"ipa\" ph=\"kɔpa\">kappa</phoneme>. </speak>".format(playerName, rating), "SSML")
-    else:
-        return output_speech
+    LOG.info("replacing with meme")
+    rating = random.randint(500, 1500)
+    return speech.build_output_speech("<speak>{}'s rating is {}. <break time=\"1s\"/> <amazon:effect name=\"whispered\"><phoneme alphabet=\"ipa\" ph=\"kɔpa\">kappa</phoneme></amazon:effect>. </speak>".format(playerName, rating), "SSML")
