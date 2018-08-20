@@ -1,8 +1,8 @@
 import json
 import logging
-import urllib
 import random
 import speech
+import urllib
 
 from users import USERID_TO_DOTAID
 from users import USERID_TO_OVERWATCHID
