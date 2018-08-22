@@ -36,7 +36,7 @@ def handle(request):
         if dotaRating is None:
             output_speech = speech.build_plain_output_speech("{} has no rating. They either need to play more ranked games or make their match data public.".format(playerName))
         else:
-            output_speech = speech.build_plain_output_speech("{}'s rating is {}".format(playerName, dotaRating))
+            output_speech = speech.build_plain_output_speech("{}'s dota rating is {}".format(playerName, dotaRating))
             LOG.info("dota: userId=%s, rating=%d", userId, dotaRating)
 
     if random.randint(0, 9) <= 0:
@@ -82,4 +82,4 @@ def call(url):
 def use_meme_response(output_speech, playerName):
     LOG.info("replacing with meme")
     rating = random.randint(500, 1500)
-    return speech.build_output_speech("<speak>{}'s rating is {}. <break time=\"1s\"/> <amazon:effect name=\"whispered\"><phoneme alphabet=\"ipa\" ph=\"kɔpa\">kappa</phoneme></amazon:effect>. </speak>".format(playerName, rating), "SSML")
+    return speech.build_output_speech("<speak>{}'s dota rating is {}. <break time=\"1s\"/> <amazon:effect name=\"whispered\"><phoneme alphabet=\"ipa\" ph=\"kɔpa\">kappa</phoneme></amazon:effect>. </speak>".format(playerName, rating), "SSML")
